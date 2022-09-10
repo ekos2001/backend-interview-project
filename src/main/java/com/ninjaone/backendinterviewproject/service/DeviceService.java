@@ -2,7 +2,6 @@ package com.ninjaone.backendinterviewproject.service;
 
 import com.ninjaone.backendinterviewproject.database.DeviceRepository;
 import com.ninjaone.backendinterviewproject.exception.DeviceAlreadyExistsException;
-import com.ninjaone.backendinterviewproject.exception.DeviceNotFoundException;
 import com.ninjaone.backendinterviewproject.model.Customer;
 import com.ninjaone.backendinterviewproject.model.Device;
 import lombok.extern.log4j.Log4j2;
@@ -47,9 +46,10 @@ public class DeviceService {
         return deviceRepository.save(device);
     }
 
-    public Device updateDevice(Long deviceId, Device device) throws DeviceNotFoundException {
+    public Device updateDevice(Long deviceId, Device device) {
         log.info("Updating device {} with {}", deviceId, device);
-        Device deviceToUpdate = deviceRepository.findById(deviceId).orElseThrow(DeviceNotFoundException::new);
+        Device deviceToUpdate = deviceRepository.findById(deviceId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Device with id %s not found", deviceId)));
         deviceToUpdate.setName(device.getName());
         deviceToUpdate.setDeviceType(device.getDeviceType());
         return deviceRepository.save(deviceToUpdate);

@@ -9,8 +9,23 @@ spring:
         ddl-auto: create-drop
       database-platform: org.hibernate.dialect.H2Dialect
       defer-datasource-initialization: true
+      properties:
+        hibernate:
+          order_inserts: true
+          jdbc:
+            batch_size: 0
     h2:
       console:
         enabled: true
         settings:
           web-allow-others: false
+logging:
+  level:
+    jdbc:
+      sqlonly: fatal
+      resultsettable: fatal
+      sqltiming: fatal
+      audit: fatal
+      resultset: fatal
+      connection: fatal
+

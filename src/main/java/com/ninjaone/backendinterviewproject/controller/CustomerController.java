@@ -24,7 +24,7 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO createCustomer(@RequestBody @Valid CustomerDTO customer) throws CustomerAlreadyExistsException {
-        Customer customerToCreate = new Customer(customer.getId(), customer.getName());
+        Customer customerToCreate = new Customer(customer.getName());
         return new CustomerDTO(customerService.addCustomer(customerToCreate));
     }
 
@@ -38,5 +38,10 @@ public class CustomerController {
     @GetMapping("{customerId}/cost")
     public BigDecimal getMonthlyCost(@PathVariable Long customerId) {
         return customerService.getMonthlyCost(customerId);
+    }
+
+    @GetMapping("{customerId}/cost2")
+    public BigDecimal getMonthlyCost2(@PathVariable Long customerId) {
+        return customerService.getMonthlyCost2(customerId);
     }
 }

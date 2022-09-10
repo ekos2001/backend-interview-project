@@ -44,19 +44,28 @@ public class CustomerService {
 
     public BigDecimal getMonthlyCost(Long customerId) {
         log.info("Calculating  monthly cost for customer {} ", customerId);
+        long startTime = System.currentTimeMillis();
         Customer customer = getCustomerById(customerId);
         BigDecimal cost = new BigDecimal(0);
         List<Device> devices = customer.getDevices();
-        log.info("Customer {} has {} devices", customerId, devices.size());
         for (Device device : devices) {
             cost = cost.add(device.getDeviceType().getCost());
             List<com.ninjaone.backendinterviewproject.model.Service> services = device.getServices();
-            log.info("Customer {} has device {} with {} services", customerId, device.getName(), services.size());
             for (com.ninjaone.backendinterviewproject.model.Service service : services) {
                 cost = cost.add(service.getType().getCost());
             }
         }
-        log.info("Cost for customer {} is {}", customerId, cost);
+        long endTime = System.currentTimeMillis();
+        log.info("Cost for customer {} is {}, calculated in {} ms", customerId, cost, endTime-startTime);
+        return cost;
+    }
+
+    public BigDecimal getMonthlyCost2(Long customerId) {
+        log.info("Calculating  monthly cost second approach for customer {} ", customerId);
+        long startTime = System.currentTimeMillis();
+        BigDecimal cost = customerRepository.getMonthlyCostByCustomerId(customerId);
+        long endTime = System.currentTimeMillis();
+        log.info("Cost for customer {} is {}, calculated in {} ms", customerId, cost, endTime-startTime);
         return cost;
     }
 }

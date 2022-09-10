@@ -2,7 +2,6 @@ package com.ninjaone.backendinterviewproject.controller;
 
 import com.ninjaone.backendinterviewproject.controller.dto.DeviceDTO;
 import com.ninjaone.backendinterviewproject.exception.DeviceAlreadyExistsException;
-import com.ninjaone.backendinterviewproject.exception.DeviceNotFoundException;
 import com.ninjaone.backendinterviewproject.model.Device;
 import com.ninjaone.backendinterviewproject.service.DeviceService;
 import org.springframework.http.HttpStatus;
@@ -40,7 +39,7 @@ public class DeviceController {
     }
 
     @PutMapping("{deviceId}")
-    public DeviceDTO updateDevice(@PathVariable Long deviceId, @RequestBody @Valid DeviceDTO deviceDTO) throws DeviceNotFoundException {
+    public DeviceDTO updateDevice(@PathVariable Long deviceId, @RequestBody @Valid DeviceDTO deviceDTO) {
         Device device = new Device(deviceDTO.getName(), deviceDTO.getType());
         return new DeviceDTO(deviceService.updateDevice(deviceId, device));
     }
