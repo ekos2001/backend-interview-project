@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/service")
+@RequestMapping("/api/v1/customers/devices")
 public class ServiceController {
     private final ServiceService serviceService;
 
@@ -21,21 +21,21 @@ public class ServiceController {
         this.serviceService = serviceService;
     }
 
-    @GetMapping
-    public List<ServiceDTO> getAllServicesByDevice(@RequestParam Long deviceId) {
+    @GetMapping("/{deviceId}/services")
+    public List<ServiceDTO> getAllServicesByDevice(@PathVariable Long deviceId) {
         var services = serviceService.getAllServicesByDevice(deviceId);
         return services.stream().map(ServiceDTO::new).collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping("/{deviceId}/services")
     @ResponseStatus(HttpStatus.CREATED)
-    public ServiceDTO createService(@RequestParam Long deviceId, @RequestBody @Valid ServiceDTO serviceDTO) throws ServiceAlreadyExistsException {
+    public ServiceDTO createService(@PathVariable Long deviceId, @RequestBody @Valid ServiceDTO serviceDTO) throws ServiceAlreadyExistsException {
         ServiceType serviceType = new ServiceType(serviceDTO.getTypeId());
         Service service = new Service(serviceType);
         return new ServiceDTO(serviceService.createService(deviceId, service));
     }
 
-    @DeleteMapping("{serviceId}")
+    @DeleteMapping("/services/{serviceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteService(@PathVariable Long serviceId) {
         serviceService.deleteDevice(serviceId);

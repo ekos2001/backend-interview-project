@@ -6,7 +6,7 @@ import com.ninjaone.backendinterviewproject.service.DeviceTypeService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/device-type")
+@RequestMapping("/api/v1/settings/device-types")
 public class DeviceTypeController {
     private final DeviceTypeService deviceTypeService;
 

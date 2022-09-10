@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -35,12 +35,12 @@ public class CustomerController {
         return customers;
     }
 
-    @GetMapping("{customerId}/cost")
+    @GetMapping("/{customerId}/cost")
     public BigDecimal getMonthlyCost(@PathVariable Long customerId) {
         return customerService.getMonthlyCost(customerId);
     }
 
-    @GetMapping("{customerId}/cost2")
+    @GetMapping("/{customerId}/cost2")
     public BigDecimal getMonthlyCost2(@PathVariable Long customerId) {
         return customerService.getMonthlyCost2(customerId);
     }

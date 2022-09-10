@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/device")
+@RequestMapping("/api/v1/customers")
 public class DeviceController {
     private final DeviceService deviceService;
 
@@ -20,31 +20,31 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @GetMapping
-    public List<DeviceDTO> getAllDevicesByCustomer(@RequestParam Long customerId) {
+    @GetMapping("/{customerId}/devices")
+    public List<DeviceDTO> getAllDevicesByCustomer(@PathVariable Long customerId) {
         List<Device> devices = deviceService.getAllDevicesByCustomer(customerId);
         return devices.stream().map(DeviceDTO::new).collect(Collectors.toList());
     }
 
-    @GetMapping("{deviceId}")
+    @GetMapping("/devices/{deviceId}")
     public DeviceDTO getDeviceById(@PathVariable Long deviceId) {
         return new DeviceDTO(deviceService.getDeviceById(deviceId));
     }
 
-    @PostMapping
+    @PostMapping("{customerId}/devices")
     @ResponseStatus(HttpStatus.CREATED)
-    public DeviceDTO createDevice(@RequestParam Long customerId, @RequestBody @Valid DeviceDTO deviceDTO) throws DeviceAlreadyExistsException {
+    public DeviceDTO createDevice(@PathVariable Long customerId, @RequestBody @Valid DeviceDTO deviceDTO) throws DeviceAlreadyExistsException {
         Device device = new Device(deviceDTO.getName(), deviceDTO.getType());
         return new DeviceDTO(deviceService.createDevice(customerId, device));
     }
 
-    @PutMapping("{deviceId}")
+    @PutMapping("/devices/{deviceId}")
     public DeviceDTO updateDevice(@PathVariable Long deviceId, @RequestBody @Valid DeviceDTO deviceDTO) {
         Device device = new Device(deviceDTO.getName(), deviceDTO.getType());
         return new DeviceDTO(deviceService.updateDevice(deviceId, device));
     }
 
-    @DeleteMapping("{deviceId}")
+    @DeleteMapping("/devices/{deviceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDevice(@PathVariable Long deviceId) {
         deviceService.deleteDevice(deviceId);
