@@ -2,7 +2,7 @@ spring:
     datasource:
       url: jdbc:h2:mem:localdb
       username: sa
-      password: password
+      password:
       driver-class-name: org.h2.Driver
     jpa:
       hibernate:
@@ -19,6 +19,14 @@ spring:
         enabled: true
         settings:
           web-allow-others: false
+#    autoconfigure:
+#      exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+app:
+  jwt:
+    expiration: 90
+    secret: nf09834yfhanp89dq235hn
+
 logging:
   level:
     jdbc:
@@ -28,4 +36,3 @@ logging:
       audit: fatal
       resultset: fatal
       connection: fatal
-

@@ -37,6 +37,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, message));
     }
 
+    @ExceptionHandler(GenericApiException.class)
+    public ResponseEntity<Object> handleGenericApiException(GenericApiException ex) {
+        String message = ex.getLocalizedMessage();
+        log.error(ex);
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message));
+    }
+
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }

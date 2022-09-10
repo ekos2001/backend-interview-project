@@ -1,6 +1,10 @@
 package com.ninjaone.backendinterviewproject.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -17,15 +21,26 @@ public class ApiError {
         timestamp = LocalDateTime.now();
     }
 
-    ApiError(HttpStatus status) {
+    public ApiError(HttpStatus status) {
         this();
         this.status = status;
         this.message = "Unexpected error";
     }
 
-    ApiError(HttpStatus status, String message) {
+    public ApiError(HttpStatus status, String message) {
         this();
         this.status = status;
         this.message = message;
+    }
+
+    public String convertToJson() throws JsonProcessingException {
+        if (this == null) {
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        return mapper.writeValueAsString(this);
     }
 }
