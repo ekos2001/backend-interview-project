@@ -37,7 +37,7 @@
 								"authenticate"
 							]
 						},
-						"description": "Use this API to send registered user name and password for the authentication.\n\nDefault user name is \"admin\" and password is \"admin\".\n\nIn case of successful authentication Bearer token will be sent back.\n\nEach request to one of APIs needs to be accompanied by an Authorization header  \ncontaining a Bearer token in the following format:\n\n`Authorization: Bearer TOKEN`\n\nThere should be a space between Bearer word and a token itself.\n\nToken will expire after 90 minutes."
+						"description": "Use this API to send registered user name and password for the authentication.\n\nDefault user name is \"admin\" and password is \"admin\".\n\nIn case of successful authentication Bearer token will be sent back.\n\nEach request to one of APIs needs to be accompanied by an Authorization header  \ncontaining a Bearer token in the following format:\n\n`Authorization: Bearer TOKEN`\n\nThere should be a space between Bearer word and a token itself.\n\nToken will expire after 90 minutes.\n\n# **Note**\n\nAll requests in this collection are configured to use `{{Bearer}}` variable. You have to update it with valid token and save collection to apply changes."
 					},
 					"response": [
 						{
@@ -1703,7 +1703,7 @@
 	"variable": [
 		{
 			"key": "Bearer",
-			"value": "Bearer "
+			"value": "Bearer TOKEN"
 		}
 	]
 }
