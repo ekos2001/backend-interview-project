@@ -31,7 +31,7 @@ public class DeviceController {
         return new DeviceDTO(deviceService.getDeviceById(deviceId));
     }
 
-    @PostMapping("{customerId}/devices")
+    @PostMapping("/{customerId}/devices")
     @ResponseStatus(HttpStatus.CREATED)
     public DeviceDTO createDevice(@PathVariable Long customerId, @RequestBody @Valid DeviceDTO deviceDTO) throws DeviceAlreadyExistsException {
         Device device = new Device(deviceDTO.getName(), deviceDTO.getType());
@@ -39,6 +39,7 @@ public class DeviceController {
     }
 
     @PutMapping("/devices/{deviceId}")
+    @ResponseStatus(HttpStatus.OK)
     public DeviceDTO updateDevice(@PathVariable Long deviceId, @RequestBody @Valid DeviceDTO deviceDTO) {
         Device device = new Device(deviceDTO.getName(), deviceDTO.getType());
         return new DeviceDTO(deviceService.updateDevice(deviceId, device));

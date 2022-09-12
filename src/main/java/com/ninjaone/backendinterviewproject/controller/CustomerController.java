@@ -1,5 +1,6 @@
 package com.ninjaone.backendinterviewproject.controller;
 
+import com.ninjaone.backendinterviewproject.controller.dto.CostDTO;
 import com.ninjaone.backendinterviewproject.controller.dto.CustomerDTO;
 import com.ninjaone.backendinterviewproject.exception.CustomerAlreadyExistsException;
 import com.ninjaone.backendinterviewproject.model.Customer;
@@ -36,12 +37,12 @@ public class CustomerController {
     }
 
     @GetMapping("/{customerId}/cost")
-    public BigDecimal getMonthlyCost(@PathVariable Long customerId) {
-        return customerService.getMonthlyCost(customerId);
+    public CostDTO getMonthlyCost(@PathVariable Long customerId) {
+        return new CostDTO(customerService.getMonthlyCost(customerId));
     }
 
     @GetMapping("/{customerId}/cost2")
-    public BigDecimal getMonthlyCost2(@PathVariable Long customerId) {
-        return customerService.getMonthlyCost2(customerId);
+    public CostDTO getMonthlyCost2(@PathVariable Long customerId) {
+        return new CostDTO(customerService.getMonthlyCost2(customerId));
     }
 }

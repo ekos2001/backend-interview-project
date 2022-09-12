@@ -1,5 +1,6 @@
 package com.ninjaone.backendinterviewproject.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @ToString
 public class DeviceType {
     @Id

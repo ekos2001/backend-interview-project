@@ -3,6 +3,7 @@ package com.ninjaone.backendinterviewproject.exception;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -42,6 +43,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String message = ex.getLocalizedMessage();
         log.error(ex);
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message));
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex) {
+        String message = ex.getLocalizedMessage();
+        log.error(ex);
+        return buildResponseEntity(new ApiError(HttpStatus.FORBIDDEN, message));
     }
 
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {

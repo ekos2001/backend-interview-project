@@ -1,11 +1,13 @@
 package com.ninjaone.backendinterviewproject.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@EqualsAndHashCode
 @Getter
 public class User {
     @Id

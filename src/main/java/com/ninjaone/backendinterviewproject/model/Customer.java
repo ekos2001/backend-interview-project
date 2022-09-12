@@ -1,15 +1,18 @@
 package com.ninjaone.backendinterviewproject.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @ToString
+@EqualsAndHashCode
 @NamedQuery(name = "getMonthlyCostByCustomerId",
         query = "select " +
                 "coalesce((select sum(dt.cost) from Device d join DeviceType dt on d.deviceType.id = dt.id " +
@@ -23,6 +26,7 @@ public class Customer {
     private Long id;
     @Column(unique=true, nullable = false)
     private String name;
+    private BigDecimal cost = BigDecimal.ZERO;
     @OneToMany(targetEntity=Device.class, mappedBy="customer",cascade= CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Device> devices = new ArrayList<>();
 
@@ -39,5 +43,9 @@ public class Customer {
     public Customer(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
     }
 }

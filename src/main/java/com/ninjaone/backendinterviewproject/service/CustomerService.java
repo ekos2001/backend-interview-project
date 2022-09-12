@@ -3,14 +3,11 @@ package com.ninjaone.backendinterviewproject.service;
 import com.ninjaone.backendinterviewproject.database.CustomerRepository;
 import com.ninjaone.backendinterviewproject.exception.CustomerAlreadyExistsException;
 import com.ninjaone.backendinterviewproject.model.Customer;
-import com.ninjaone.backendinterviewproject.model.Device;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Log4j2
@@ -34,30 +31,13 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(Long customerId) {
-        Optional<Customer> customer = customerRepository.findById(customerId);
-        if (customer.isEmpty()) {
-            String msg = String.format("Customer with id %s not found", customerId);
-            throw new EntityNotFoundException(msg);
-        }
-        return customer.get();
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Customer with id %s not found", customerId)));
     }
 
     public BigDecimal getMonthlyCost(Long customerId) {
-        log.info("Calculating  monthly cost for customer {} ", customerId);
-        long startTime = System.currentTimeMillis();
         Customer customer = getCustomerById(customerId);
-        BigDecimal cost = new BigDecimal(0);
-        List<Device> devices = customer.getDevices();
-        for (Device device : devices) {
-            cost = cost.add(device.getDeviceType().getCost());
-            List<com.ninjaone.backendinterviewproject.model.Service> services = device.getServices();
-            for (com.ninjaone.backendinterviewproject.model.Service service : services) {
-                cost = cost.add(service.getType().getCost());
-            }
-        }
-        long endTime = System.currentTimeMillis();
-        log.info("Cost for customer {} is {}, calculated in {} ms", customerId, cost, endTime-startTime);
-        return cost;
+        return customer.getCost();
     }
 
     public BigDecimal getMonthlyCost2(Long customerId) {

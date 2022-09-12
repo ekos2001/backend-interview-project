@@ -1,8 +1,8 @@
 --security user
 INSERT INTO USER(LOGIN, PASSWORD) VALUES ('admin', '$2a$12$nygY3A4rca2BvwUEk/qKTuKYfZ6G9WpshlfxIFui/LRAoecs2n.KS');
 --customers
-INSERT INTO CUSTOMER(ID, NAME) VALUES (1, 'Google');
-INSERT INTO CUSTOMER(ID, NAME) VALUES (2, 'Amazon');
+INSERT INTO CUSTOMER(ID, NAME, COST) VALUES (1, 'Google', 71);
+INSERT INTO CUSTOMER(ID, NAME, COST) VALUES (2, 'Amazon', 28);
 
 --Device type
 INSERT INTO DEVICE_TYPE(ID, TYPE, NAME, COST) values (1, 'WINDOWS_WORKSTATION', 'Windows Workstation', 4);

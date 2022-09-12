@@ -1,6 +1,7 @@
 package com.ninjaone.backendinterviewproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @ToString
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = {"service_type_id", "device_id"})})
 public class Service {
@@ -32,6 +34,10 @@ public class Service {
 
     public Service(Long id, ServiceType type) {
         this.id = id;
+        this.type = type;
+    }
+
+    public void setType(ServiceType type) {
         this.type = type;
     }
 

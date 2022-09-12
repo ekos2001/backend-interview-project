@@ -1,5 +1,6 @@
 package com.ninjaone.backendinterviewproject.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @ToString
+@EqualsAndHashCode
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = {"name", "device_type_id", "customer_id"})})
 public class Device {
     @Id

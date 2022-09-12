@@ -38,6 +38,6 @@ public class ServiceController {
     @DeleteMapping("/services/{serviceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteService(@PathVariable Long serviceId) {
-        serviceService.deleteDevice(serviceId);
+        serviceService.deleteService(serviceId);
     }
 }
